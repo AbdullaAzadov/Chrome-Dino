@@ -1,6 +1,15 @@
 import pygame
 import random
+import os
 
+def get_path():
+    dir = str(os.getcwd())
+    str_dir = ''
+    for let in dir:
+        if ord(let) == 92: let = "/"
+        str_dir+= let
+    print(str_dir)
+    return str_dir
 # Инициализация Pygame
 pygame.init()
 
@@ -13,10 +22,11 @@ GREY = (224, 224, 224)
 # Определение размеров экрана
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+GAME_MODE = "basic"
 fps = pygame.time.Clock()
 # Создание экрана
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-path = r"C:/Users/Abdulla/Desktop/dino/"
+path = get_path() + f"/{GAME_MODE}/"
 
 # Объявление спрайтов
 ground_img = pygame.image.load(path + "ground.png")
@@ -152,7 +162,7 @@ while play:
     # Отрисовка Дино
         if frame % 6 == 0: dino_move_switch = not dino_move_switch
 
-        if dino_prev_y == dino_y and not isSitted:
+        if isGround and not isSitted:
             if dino_move_switch: screen.blit(dino_move[0], (dino_x, dino_y))
             else: screen.blit(dino_move[1], (dino_x, dino_y))
         elif not isSitted: screen.blit(dino, (dino_x, dino_y))
